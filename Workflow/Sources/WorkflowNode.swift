@@ -74,11 +74,11 @@ final class WorkflowNode<WorkflowType: Workflow> {
         onOutput?(output)
     }
 
-    func render() -> WorkflowType.Rendering {
-        WorkflowLogger.logWorkflowStartedRendering(ref: self)
+    func render(logTimings: Bool = false) -> WorkflowType.Rendering {
+        logTimings ? WorkflowLogger.logWorkflowStartedRendering(ref: self) : ()
 
         defer {
-            WorkflowLogger.logWorkflowFinishedRendering(ref: self)
+            logTimings ? WorkflowLogger.logWorkflowFinishedRendering(ref: self) : ()
         }
 
         return subtreeManager.render { context in
