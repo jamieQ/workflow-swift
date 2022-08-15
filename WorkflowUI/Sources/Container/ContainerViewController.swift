@@ -54,6 +54,7 @@
                 .rendering
                 .signal
                 .take(during: lifetime)
+                .throttle(1 / 30.0, on: QueueScheduler.main) // throttle render output to once every ~33ms
                 .observeValues { [weak self] screen in
                     guard let self = self else { return }
                     self.render(screen: screen, environment: self.rootViewEnvironment)
